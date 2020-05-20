@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital encoding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@669&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <label for="bits">Ingrese la cadena de bits a traducir</label>
+        <br>
+        <input type="text" name="bits" id="bits" placeholder="0111000101">
+        <br>
+        <button id="btn-bits" onclick="clearText()">Clear</button>
+        <div class="flex-container">
+            <div class="tag">
+
+                <div id="tag-unipolar">Unipolar NRZ</div>
+            </div>
+            <div class="tag">
+                <div id="tag-manchester">Manchester</div>
+            </div>
+            <div class="tag">
+                <div id="tag-diff-manchester">Differential Manchester</div>
+            </div>
+            
+        </div>
+
+
+    </div>
+
+    <canvas id="positiveUnipolarNonReturnToZero" width="800px"></canvas>
+    <canvas id="manchester" width="800px"></canvas>
+    <canvas id="diffManchester" width="800px"></canvas>
+    <canvas id="diffManchester2" width="800px"></canvas>
+
+    <script src="encoding.js"></script>
+</body>
+
+</html>
