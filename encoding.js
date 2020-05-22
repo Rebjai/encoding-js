@@ -326,6 +326,7 @@ function NRZI(arr = [], ctx = ctxbipolarNRZI) {
         }
         x += sliceWidth;
     }
+    ctx.lineTo(x, midPoint)
    
     ctx.stroke()
     ctx.closePath()
