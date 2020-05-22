@@ -15,28 +15,65 @@
         <br>
         <input type="text" name="bits" id="bits" placeholder="0111000101">
         <br>
-        <button id="btn-bits" onclick="clearText()">Clear</button>
-        <div class="flex-container">
-            <div class="tag">
+        <button id="btn-bits" onclick="clearText()">Reset</button>
 
-                <div id="tag-unipolar">Unipolar NRZ</div>
-            </div>
-            <div class="tag">
-                <div id="tag-manchester">Manchester</div>
-            </div>
-            <div class="tag">
-                <div id="tag-diff-manchester">Differential Manchester</div>
-            </div>
-            
-        </div>
+
+
+
+
 
 
     </div>
-
+    <div class="container">
+        <div class="flex-container">
+            <div class="tag">
+                <div id="tag-unipolar">Unipolar NRZ</div>
+            </div>
+        </div>
+    </div>
     <canvas id="positiveUnipolarNonReturnToZero" width="800px"></canvas>
+    <div class="container">
+        <div class="flex-container">
+            <div class="tag">
+                <div id="tag-bipolar-nrz">Bipolar NRZL</div>
+            </div>
+        </div>
+    </div>
+    <canvas id="bipolarNRZL" width="800px"></canvas>
+
+    <div class="container">
+        <div class="flex-container">
+            <div class="tag">
+                <div id="tag-bipolar-nrzi">Bipolar NRZI</div>
+            </div>
+        </div>
+    </div>
+    <canvas id="bipolarNRZI" width="800px"></canvas>
+    <div class="container">
+        <div class="flex-container">
+            <div class="tag">
+                <div id="tag-manchester">Manchester</div>
+            </div>
+        </div>
+    </div>
     <canvas id="manchester" width="800px"></canvas>
-    <canvas id="diffManchester" width="800px"></canvas>
-    <canvas id="diffManchester2" width="800px"></canvas>
+    <div class="container">
+        <div class="flex-container">
+            <div class="tag">
+                <div id="tag-diff-manchester">Differential Manchester</div>
+            </div>
+        </div>
+    </div>
+        <canvas id="diffManchester" width="800px"></canvas>
+    <div class="container">
+        <div class="flex-container">
+            <div class="tag">
+                <div id="tag-diff-manchester">Differential Manchester</div>
+            </div>
+        </div>
+    </div>
+        <canvas id="diffManchester2" width="800px"></canvas>
+
 
     <script src="encoding.js"></script>
 </body>

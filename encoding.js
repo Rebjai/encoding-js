@@ -5,6 +5,12 @@ const $ = (str) => document.querySelector(str)
 let unipolarPositiveNonReturnZeroCanvas = document.getElementById('positiveUnipolarNonReturnToZero');
 let ctxUnipolar = unipolarPositiveNonReturnZeroCanvas.getContext("2d");
 
+let bipolarNRZLCanvas = document.getElementById('bipolarNRZL');
+let ctxbipolarNRZL = bipolarNRZLCanvas.getContext("2d");
+
+let bipolarNRZICanvas = document.getElementById('bipolarNRZI');
+let ctxbipolarNRZI = bipolarNRZICanvas.getContext("2d");
+
 let manchesterCanvas = document.getElementById('manchester');
 let ctxManchester = manchesterCanvas.getContext("2d");
 
@@ -36,6 +42,8 @@ let midPoint = graphHeight / 2 + topMargin
 function graph() {
     bitString = $('#bits').value != '' ? $('#bits').value : '0111000101'
     draw()
+    draw(bipolarNRZLCanvas, ctxbipolarNRZL, NRZL)
+    draw(bipolarNRZICanvas, ctxbipolarNRZI, NRZI)
     draw(manchesterCanvas, ctxManchester, manchesterize)
     draw(diffManchesterCanvas, ctxDiffManchester, diffManchester)
     draw(diffManchesterCanvas2, ctxDiffManchester2, diffManchester, false)
@@ -51,7 +59,7 @@ function draw(canvas = unipolarPositiveNonReturnZeroCanvas, ctx = ctxUnipolar, e
 
     //setup
     
-    canvas.width = window.innerWidth
+    canvas.width = window.innerWidth-15
     sideMargin = canvas.width * marginPercetage
     graphWidth = canvas.width - (sideMargin * 2)
     graphHeight = unipolarPositiveNonReturnZeroCanvas.height - topMargin
@@ -113,7 +121,7 @@ function getBitLabels(arr = bitArray, ctx = ctxUnipolar) {
 }
 
 function drawLine(x1, y1, x2, y2, ctx = ctxUnipolar, color = 'gray') {
-    console.log('drawing line on', ctx);
+    // console.log('drawing line on', ctx);
 
     ctx.beginPath()
     ctx.strokeStyle = color
@@ -232,6 +240,96 @@ function unipolarNonZero(arr = [], ctx = unipolarCtx) {
     ctx.stroke()
     ctx.closePath()
 }
+function NRZL(arr = [], ctx = ctxbipolarNRZL) {
+    console.log('encoding bipolar NRZL in', ctx);
+
+    let newArr = arr
+    let sliceWidth = graphWidth / newArr.length
+    let x = sideMargin;
+    ctx.moveTo(sideMargin, midPoint)
+
+    let wasZero = true
+    ctx.strokeStyle = '#1F618D'
+    ctx.beginPath()
+    for (let i = 0; i < newArr.length; i++) {
+        let label = newArr[i]
+
+        if (label == '0' && wasZero) {
+            ctx.lineTo(x, bottomPoint)
+            // console.log('0 -> 0');
+
+        } else if (label == '0' && !wasZero) {
+
+            ctx.lineTo(x , topPoint)
+            ctx.lineTo(x , bottomPoint)
+            wasZero = true
+            // console.log('1 -> 0');
+        }
+        else if (label == '1' && wasZero) {
+            ctx.lineTo(x , bottomPoint)
+            ctx.lineTo(x , topPoint)
+            wasZero = false
+            // console.log('0 -> 1');
+            // ctx.lineTo(x+ sideMargin, midPoint)
+        }
+        else {
+            ctx.lineTo(x, topPoint)
+            // console.log('1 -> 1');
+        }
+
+        x += sliceWidth;
+    }
+    if (wasZero) {
+        ctx.lineTo(x, bottomPoint)
+        // console.log('0 -> 0');
+    } else {
+        ctx.lineTo(x, topPoint)
+        ctx.lineTo(x, bottomPoint)
+        // console.log('1 -> 1');
+    }
+    ctx.stroke()
+    ctx.closePath()
+}
+function NRZI(arr = [], ctx = ctxbipolarNRZI) {
+    console.log('encoding bipolar NRZI in', ctx);
+
+    let newArr = arr
+    let sliceWidth = graphWidth / newArr.length
+    let x = sideMargin;
+    ctx.moveTo(sideMargin, midPoint)
+
+    let isPositive = false
+    ctx.strokeStyle = 'purple'
+    ctx.beginPath()
+    for (let i = 0; i < newArr.length; i++) {
+        let label = newArr[i]
+        
+        if(label == '1' && isPositive){
+            ctx.lineTo(x, topPoint)
+            ctx.lineTo(x + sliceWidth, topPoint)
+            isPositive = false
+        }
+        else if(label == '1' && !isPositive){
+            ctx.lineTo(x, bottomPoint)
+            ctx.lineTo(x + sliceWidth, bottomPoint)
+            isPositive = true
+        }
+        else if(label == '0' && isPositive){
+            ctx.lineTo(x, bottomPoint)
+            ctx.lineTo(x + sliceWidth, bottomPoint)
+        }
+        else {
+            
+            ctx.lineTo(x, topPoint)
+            ctx.lineTo(x + sliceWidth, topPoint)
+            
+        }
+        x += sliceWidth;
+    }
+   
+    ctx.stroke()
+    ctx.closePath()
+}
 
 function diffManchester(arr = [], ctx = unipolarCtx, startingVal = true) {
     console.log('encoding diffManchester in', ctx);
@@ -297,3 +395,4 @@ function clearText() {
 }
 
 $('#bits').addEventListener('keyup',e => graph())
+graph()
