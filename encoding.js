@@ -50,7 +50,6 @@ function graph() {
     draw(manchesterCanvas, ctxManchester, manchesterize)
     draw(diffManchesterCanvas, ctxDiffManchester, diffManchester)
     draw(diffManchesterCanvas2, ctxDiffManchester2, diffManchester, false)
-
 }
 
 function draw(canvas = unipolarPositiveNonReturnZeroCanvas, ctx = ctxUnipolar, encoding = unipolarNonZero, startingVal = true) {
@@ -91,6 +90,7 @@ function draw(canvas = unipolarPositiveNonReturnZeroCanvas, ctx = ctxUnipolar, e
     drawLine(sideMargin, midPoint, canvas.width, midPoint, ctx)
 
     // vertical lines
+    ctx.lineWidth = 3
     drawVerticalLines(newArr, ctx, canvas)
 
     // pass the encoding Function
